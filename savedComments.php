@@ -1,5 +1,33 @@
 <?php
+ session_start();
+ if(!isset($_SESSION["sess_user"])){
+	header("location:index.html");
+} else {
+	$servername = "localhost";
+	$username = "root";
+	$password = "raspberry";
+	$dbname = "injection";
 
-	echo "Hello World";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
 
+$sql = "SELECT * FROM comments";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "Message: " . $row["message"]. "<br>";
+    }
+	echo "<button>"."<a style = text-decoration:none; href = logout.php>"."LOGOUT"."</a>"."</button>";
+
+} else {
+    echo "0 results";
+}
+	$conn->close();
+}
 ?>

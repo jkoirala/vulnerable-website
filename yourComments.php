@@ -1,5 +1,8 @@
 <?php
-
+ session_start();
+ if(!isset($_SESSION["sess_user"])){
+	header("location:index.html");
+} else {
 	$servername = "localhost";
 	$username =   "root";
 	$password =   "raspberry";
@@ -21,11 +24,14 @@
 	if ($conn->query($sql) === TRUE) {
     		echo "Congratulation! New Comment created successfully!"."<br>";
 		echo "Click here to see all the comments"." "."<button>"."<a style = text-decoration : none href = savedComments.php>"."View"."</a>"."</button>"."<br>";
+		echo "<button>"."<a href = member.php>"."GO BACK"."</a>"."</button>";
 	} else {
     		echo "Error: " . $sql . "<br>" . $conn->error;
+		echo "<button>"."<a href = member.php>"."GO BACK"."</a>"."</button>";
+
 	}
 
    $conn->close();
-
+}
 
 ?>
